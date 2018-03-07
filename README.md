@@ -10,3 +10,4 @@ To work with the code. you may open the MainBar.m or MainBeam.m or MainPlate.m
 Each function has some comprehensive comments in it.
 
 The functions are built in building-block form to enable reuseability
+All ".m" files will readily work on Octave, FreeMat, or Matlab
