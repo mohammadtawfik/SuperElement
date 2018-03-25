@@ -65,7 +65,7 @@ KB=zeros((nn+1),(nn+1));
             %Hb=CalcNL(X,nn+1,LengthX);
             %**************************
             %Multiplying the C'.Q.C at the point
-            Kb= cb'*Q*cb;
+            Kb= cb*Q*cb';
             %For mass matrix use the line below
             %NOTE that the density is
             % NOT included in this function

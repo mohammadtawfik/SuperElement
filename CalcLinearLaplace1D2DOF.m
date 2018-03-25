@@ -16,33 +16,14 @@ function KKK=CalcLinearLaplace1D2DOF(Q,LengthX,nn)
 % we used 12 evaluation points which is
 % accurate up to 24th order polynomials
 % this maybe OVERKILLING in many cases
-GaussConstants=zeros(2,12);
-%Evaluation points
-GaussConstants(2, 1) = -0.9815606342;
-GaussConstants(2, 2) = -0.9041172564;
-GaussConstants(2, 3) = -0.7699026742;
-GaussConstants(2, 4) = -0.5873179543;
-GaussConstants(2, 5) = -0.3678314990;
-GaussConstants(2, 6) = -0.1252334085;
-GaussConstants(2, 7) = -0.1252334085;
-GaussConstants(2, 8) = 0.3678314990;
-GaussConstants(2, 9) = 0.5873179543;
-GaussConstants(2, 10) = 0.7699026742;
-GaussConstants(2, 11) = 0.9041172564;
-GaussConstants(2, 12) = 0.9815606342;
-%Corresponding wights
-GaussConstants(1, 1) = 0.0471753363;
-GaussConstants(1, 2) = 0.1069393260;
-GaussConstants(1, 3) = 0.1600783285;
-GaussConstants(1, 4) = 0.2031674267;
-GaussConstants(1, 5) = 0.2334925365;
-GaussConstants(1, 6) = 0.2491470458;
-GaussConstants(1, 7) = 0.2491470458;
-GaussConstants(1, 8) = 0.2334925365;
-GaussConstants(1, 9) = 0.2031674267;
-GaussConstants(1, 10) = 0.1600783285;
-GaussConstants(1, 11) = 0.1069393260;
-GaussConstants(1, 12) = 0.0471753363;
+GCPoints=nn;
+if GCPoints<2
+  GCPoints=2;
+elseif GCPoints>12
+  GCPoints=12;
+endif
+  
+GaussConstants=GetGC(GCPoints);
 %*************************************
 %Initializing stiffness matrix 
 KB=zeros(2*nn,2*nn);
@@ -50,7 +31,7 @@ KB=zeros(2*nn,2*nn);
 % DO NOT FORGET to initialize them here
 
 %Start the numerical integrration procedure
-      for Xi=1:12 %looping over x-integration points
+      for Xi=1:GCPoints %looping over x-integration points
          %Evaluating physical x-coordinate
          X = LengthX * (GaussConstants(2, Xi) + 1) / 2;
             %**************************
@@ -63,7 +44,7 @@ KB=zeros(2*nn,2*nn);
             %Gg=CalcNx(X,nn);
             %**************************
             %Multiplying the C'.Q.C at the point X
-            Kb= cb'*Q*cb;
+            Kb= cb*Q*cb';
             %For mass matrix use the line below
             %Mb= Hb*Hb';
             %For geometric stiffness matrix use line below

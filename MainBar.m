@@ -20,7 +20,7 @@ Nne=2; %Number of nodes per element of the beam
 nn=Nne-1; %Plynomial degree
 
 Lx=1; %Length in the x-direction
-E=10.92; %modulus of elasticity
+E=1; %modulus of elasticity
 Thickness=1; %Beam thickness
 Width=1; %Beam width
 
@@ -29,13 +29,17 @@ Q=E*Width*Thickness; %EA
 %Evaluating the Transformation matrix 
 T1=CalcTinv1D1DOF(Lx,nn);
 %Evaluating the element stiffness matrix 
+% Using classical method 
 KB=CalcLinear1D1DOF(Q,Lx,nn);
+% Using Exact method 
 %KB=CalcLinearExact1D1DOF(Q,Lx,nn);
+% Using Lagrange polynomials
 %KB=CalcLinearLagrange1D1DOF(Q,Lx,nn);
+
 %Transforming from generalized coordinates
 % into DOF generalized coordinates
+% IMPORTANT: Do not use with Lagrange method 
 KB=T1'*KB*T1;
-
 
 vvB=sort((real(eig(KB))));
 vvB

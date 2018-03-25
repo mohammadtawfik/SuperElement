@@ -50,11 +50,11 @@ function fi=CalcNxx(xx,nn,Lx)
          Temp3=Temp3*2;
          Temp4=0;
          for ll=1:nn
-             Temp5=0;
              if ll!=ii
+                 Temp5=0;
                  for mm=1:nn 
-                     Temp6=1;
                      if and(mm!=ii, mm!=ll)
+                         Temp6=1;
                          for jj=1:nn 
                              if and(jj!=ii,and(jj!=ll,jj!=mm))
                                  Temp6=Temp6* ...
